@@ -1,0 +1,48 @@
+2018-03-26T07:31:10+00:00 CRITICAL Uncaught Error: Call to a member function to_array() on null in /var/www/wordpress2/wp-content/plugins/asmproger-plugin/asmproger-plugin.php:69
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/shortcodes.php(319): WP_Asmproger_Plugin::shortBook(Array, '', 'asmp_book_meta')
+#1 [internal function]: do_shortcode_tag(Array)
+#2 /var/www/wordpress2/wp-includes/shortcodes.php(197): preg_replace_callback('/\\[(\\[?)(asmp_b...', 'do_shortcode_ta...', '<pre>[asmp_book...')
+#3 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): do_shortcode('<pre>[asmp_book...')
+#4 /var/www/wordpress2/wp-includes/plugin.php(203): WP_Hook->apply_filters('<pre>[asmp_book...', Array)
+#5 /var/www/wordpress2/wp-includes/post-template.php(240): apply_filters('the_content', '<pre>[asmp_book...')
+#6 /var/www/wordpress2/wp-content/themes/storefront/inc/storefront-template-functions.php(339): the_content()
+#7 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): storefront_page_content('')
+#8 /var/www/wordpress2/wp-includes/class-wp-hook.php
+
+2018-03-26T07:37:15+00:00 CRITICAL Uncaught Error: Call to undefined function has_meta() in /var/www/wordpress2/wp-content/plugins/asmproger-plugin/asmproger-plugin.php:74
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/shortcodes.php(319): WP_Asmproger_Plugin::shortBook(Array, '', 'asmp_book_meta')
+#1 [internal function]: do_shortcode_tag(Array)
+#2 /var/www/wordpress2/wp-includes/shortcodes.php(197): preg_replace_callback('/\\[(\\[?)(asmp_b...', 'do_shortcode_ta...', '<pre>[asmp_book...')
+#3 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): do_shortcode('<pre>[asmp_book...')
+#4 /var/www/wordpress2/wp-includes/plugin.php(203): WP_Hook->apply_filters('<pre>[asmp_book...', Array)
+#5 /var/www/wordpress2/wp-includes/post-template.php(240): apply_filters('the_content', '<pre>[asmp_book...')
+#6 /var/www/wordpress2/wp-content/themes/storefront/inc/storefront-template-functions.php(339): the_content()
+#7 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): storefront_page_content('')
+#8 /var/www/wordpress2/wp-includes/class-wp-hook.php(310): 
+
+2018-03-26T07:37:25+00:00 CRITICAL Uncaught Error: Call to undefined function has_meta() in /var/www/wordpress2/wp-content/plugins/asmproger-plugin/asmproger-plugin.php:75
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/shortcodes.php(319): WP_Asmproger_Plugin::shortBook(Array, '', 'asmp_book_meta')
+#1 [internal function]: do_shortcode_tag(Array)
+#2 /var/www/wordpress2/wp-includes/shortcodes.php(197): preg_replace_callback('/\\[(\\[?)(asmp_b...', 'do_shortcode_ta...', '<pre>[asmp_book...')
+#3 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): do_shortcode('<pre>[asmp_book...')
+#4 /var/www/wordpress2/wp-includes/plugin.php(203): WP_Hook->apply_filters('<pre>[asmp_book...', Array)
+#5 /var/www/wordpress2/wp-includes/post-template.php(240): apply_filters('the_content', '<pre>[asmp_book...')
+#6 /var/www/wordpress2/wp-content/themes/storefront/inc/storefront-template-functions.php(339): the_content()
+#7 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): storefront_page_content('')
+#8 /var/www/wordpress2/wp-includes/class-wp-hook.php(310): 
+
+2018-03-26T07:37:34+00:00 CRITICAL Uncaught Error: Call to undefined function has_meta() in /var/www/wordpress2/wp-content/plugins/asmproger-plugin/asmproger-plugin.php:75
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/shortcodes.php(319): WP_Asmproger_Plugin::shortBook(Array, '', 'asmp_book_meta')
+#1 [internal function]: do_shortcode_tag(Array)
+#2 /var/www/wordpress2/wp-includes/shortcodes.php(197): preg_replace_callback('/\\[(\\[?)(asmp_b...', 'do_shortcode_ta...', '<pre>[asmp_book...')
+#3 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): do_shortcode('<pre>[asmp_book...')
+#4 /var/www/wordpress2/wp-includes/plugin.php(203): WP_Hook->apply_filters('<pre>[asmp_book...', Array)
+#5 /var/www/wordpress2/wp-includes/post-template.php(240): apply_filters('the_content', '<pre>[asmp_book...')
+#6 /var/www/wordpress2/wp-content/themes/storefront/inc/storefront-template-functions.php(339): the_content()
+#7 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): storefront_page_content('')
+#8 /var/www/wordpress2/wp-includes/class-wp-hook.php(310): 
+

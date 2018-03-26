@@ -1,0 +1,82 @@
+/*
+Theme Name: Asmproger
+Template: storefront
+Theme URI: http://wasm.in
+Author: asmproger
+Author URI: http://wasm.in
+Description: Asmproger brings your site to life with header video and immersive featured images. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: asmproger
+Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+li.type-product {
+    width: 100% !important;
+}
+
+li.type-product img {
+    max-width: 50% !important;
+}
+
+.single-product div.product .woocommerce-product-gallery {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.type-product .woocommerce-tabs {
+    padding: 0;
+}
+.type-product .woocommerce-tabs ul.tabs.wc-tabs {
+    float: none !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.type-product .woocommerce-tabs ul.tabs.wc-tabs li {
+    float: left !important;
+    margin-right: 20px !important;
+}
+.type-product .woocommerce-tabs ul.tabs li.active:before,
+.type-product .woocommerce-tabs ul.tabs li.active:after {
+    content: "";
+}
+.type-product .woocommerce-tabs .panel {
+    float: none;
+    clear: both;
+    width: 100%;
+}
+.type-product .woocommerce-Reviews-title {
+    display: none;
+}
+.type-book header.entry-header {
+    margin: 0;
+}
+.type-book header.entry-header .entry-title {
+    margin-bottom: 10px;
+}
+.type-book .book-meta-table {
+    width: auto;
+    margin-bottom: 10px;
+}
+.type-book .book-meta-table td {
+    padding: 5px 10px;
+}
+.type-book .book-meta-table tr td:first-child {
+    padding-left: 0;
+}
+.type-book .book-meta-table td.book-meta-title {
+    font-weight: bold;
+}
+.type-book .entry-content img.wp-post-image {
+    margin: 0;
+}
+.book-item td.img {
+    width: 100px;
+    margin: 0;
+    padding: 0;
+}
