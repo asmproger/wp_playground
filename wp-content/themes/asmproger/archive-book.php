@@ -25,18 +25,13 @@ get_header(); ?>
                         </td>
                         <td valign="top">
                             <?php
-                            $link = get_permalink();
-                            echo the_title('<h4><a href="'.$link.'">', '</a></h4>');
-                            echo get_post_meta(get_the_ID(), 'Writer', 1);
+                                $link = get_permalink();
+                                echo the_title('<h4><a href="'.$link.'">', '</a></h4>');
+                                WP_Asmproger_Plugin::echoMeta()
                             ?>
-                            author
                         </td>
                     </tr>
                 </table>
-
-            <?php endwhile; ?>
-            <?php while (have_posts()) : the_post(); ?>
-
             <?php endwhile; ?>
         </main><!-- #main -->
     </div><!-- #primary -->

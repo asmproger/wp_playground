@@ -21,7 +21,7 @@ get_header(); ?>
                                             if ( has_post_thumbnail() ) {
                                                 the_post_thumbnail( $size );
                                             }
-                                            //WP_Asmproger_Plugin::echoMeta();
+                                            WP_Asmproger_Plugin::echoMeta();
                                         ?>
                                     </td>
                                     <td>
