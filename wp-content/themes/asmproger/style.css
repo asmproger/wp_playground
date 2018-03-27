@@ -14,13 +14,12 @@ Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-rea
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
-
-li.type-product {
-    width: 100% !important;
+.site-main ul.products li.type-product.product {
+    width: 100%;
 }
 
 li.type-product img {
-    max-width: 50% !important;
+    max-width: 50%;
 }
 
 .single-product div.product .woocommerce-product-gallery {
@@ -31,83 +30,111 @@ li.type-product img {
 .type-product .woocommerce-tabs {
     padding: 0;
 }
+
 .type-product .woocommerce-tabs ul.tabs.wc-tabs {
-    float: none !important;
-    width: auto !important;
-    margin: 0 !important;
+    float: none;
+    width: auto;
+    margin: 0;
 }
 
 .type-product .woocommerce-tabs ul.tabs.wc-tabs li {
-    float: left !important;
-    margin-right: 20px !important;
+    float: left;
+    margin-right: 20px;
 }
+
 .type-product .woocommerce-tabs ul.tabs li.active:before,
 .type-product .woocommerce-tabs ul.tabs li.active:after {
     content: "";
 }
+
 .type-product .woocommerce-tabs .panel {
     float: none;
     clear: both;
     width: 100%;
 }
+
 .type-product .woocommerce-Reviews-title {
     display: none;
 }
+
 .type-book header.entry-header {
     margin: 0;
 }
+
 .type-book header.entry-header .entry-title {
     margin-bottom: 10px;
 }
+
 .type-book .book-meta-table {
     width: auto;
     margin-bottom: 10px;
 }
+
 .type-book .book-meta-table td {
     padding: 5px 10px;
 }
+
 .type-book .book-meta-table tr td:first-child {
     padding-left: 0;
 }
+
 .type-book .book-meta-table td.book-meta-title {
     font-weight: bold;
 }
+
 .type-book .entry-content img.wp-post-image {
     margin: 0;
 }
+
 .book-item td.img {
     width: 100px;
     margin: 0;
     padding: 0;
 }
+
 .asmp-book-proposition-form div {
     padding: 5px 0;
 }
+
 .asmp-book-proposition-form label {
     width: 75px;
     display: inline-block;
 }
+
 .asmp-book-proposition-form input {
     height: 30px;
     width: 200px;
     border: 1px solid gray;
     background-color: #fff;
 }
+
 .asmp-book-proposition-form select {
     height: 30px;
     width: 50px;
     text-align: center;
 }
+
 .asmp-book-propositions {
     list-style: none;
     margin: 0;
     padding: 0;
 }
+
 .asmp-book-propositions li .asmp-proposition-email {
     font-weight: bold;
     display: inline-block;
     width: 200px;
 }
+
 .asmp-book-proposition-form-title {
     font-size: 17px;
+}
+
+.site-main .product.type-product p.price {
+    color: #f00;
+    font-size: 13px;
+    font-weight: bold;
+}
+table.single-book-table td.left {
+    width: 300px;
 }

@@ -61,6 +61,9 @@ class WP_Asmproger_Plugin
 
         // just echo html code with isbn & author name through shortcode
         add_shortcode('asmp_book_meta', ['WP_Asmproger_Plugin', 'shortBook']);
+
+        // custom hook for displaying book meta info
+        add_action('show_meta_custom_hook', array('WP_Asmproger_Plugin', 'echoMeta'));
     }
 
     /**

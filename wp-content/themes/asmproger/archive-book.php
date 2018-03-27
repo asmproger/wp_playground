@@ -33,7 +33,7 @@ get_header(); ?>
                             <?php
                                 $link = get_permalink();
                                 echo the_title('<h4><a href="'.$link.'">', '</a></h4>');
-                                WP_Asmproger_Plugin::echoMeta()
+                                do_action('show_meta_custom_hook');
                             ?>
                         </td>
                     </tr>

@@ -33,10 +33,6 @@ get_header(); ?>
                         </td>
                     </tr>
                 </table>
-
-            <?php endwhile; ?>
-            <?php while (have_posts()) : the_post(); ?>
-
             <?php endwhile; ?>
         </main><!-- #main -->
     </div><!-- #primary -->

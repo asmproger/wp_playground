@@ -46,3 +46,19 @@ Stack trace:
 #7 /var/www/wordpress2/wp-includes/class-wp-hook.php(286): storefront_page_content('')
 #8 /var/www/wordpress2/wp-includes/class-wp-hook.php(310): 
 
+2018-03-27T07:59:29+00:00 CRITICAL Uncaught Error: Call to undefined function is_plugin_active() in /var/www/wordpress2/wp-content/themes/asmproger/single-book.php:85
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/template-loader.php(74): include()
+#1 /var/www/wordpress2/wp-blog-header.php(19): require_once('/var/www/wordpr...')
+#2 /var/www/wordpress2/index.php(17): require('/var/www/wordpr...')
+#3 {main}
+  thrown
+
+2018-03-27T08:00:06+00:00 CRITICAL Uncaught Error: Call to undefined function is_plugin_active() in /var/www/wordpress2/wp-content/themes/asmproger/single-book.php:85
+Stack trace:
+#0 /var/www/wordpress2/wp-includes/template-loader.php(74): include()
+#1 /var/www/wordpress2/wp-blog-header.php(19): require_once('/var/www/wordpr...')
+#2 /var/www/wordpress2/index.php(17): require('/var/www/wordpr...')
+#3 {main}
+  thrown
+

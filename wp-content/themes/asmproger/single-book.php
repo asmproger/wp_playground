@@ -6,43 +6,44 @@
  */
 
 get_header(); ?>
-<script>
-    (function($) {
-        function clearForm() {
-            $('#asmp_user_email').val('');
-            $('#asmp_price').val('');
-            $('#asmp_currency').val('');
-        }
-        $(document).on('click', "#asmp-submit-propose", function(e) {
-            var data = {
-                action: 'amsp_propose',
-                email: $('#asmp_user_email').val(),
-                price: $('#asmp_price').val(),
-                currency: $('#asmp_currency').val()
-            };
+    <script>
+        (function ($) {
+            function clearForm() {
+                $('#asmp_user_email').val('');
+                $('#asmp_price').val('');
+                $('#asmp_currency').val('');
+            }
 
-            $.ajax({
-                url: '<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function(response) {
-                    if(response.success) {
-                        alert('success');
-                        clearForm();
-                    } else {
-                        if(response.code == 1) {
-                            alert('data error. incorrect or incomplete data.\n check form.');
+            $(document).on('click', "#asmp-submit-propose", function (e) {
+                var data = {
+                    action: 'amsp_propose',
+                    email: $('#asmp_user_email').val(),
+                    price: $('#asmp_price').val(),
+                    currency: $('#asmp_currency').val()
+                };
+
+                $.ajax({
+                    url: '<?php echo admin_url('admin-ajax.php', 'relative'); ?>',
+                    type: 'post',
+                    dataType: 'json',
+                    data: data,
+                    success: function (response) {
+                        if (response.success) {
+                            alert('success');
+                            clearForm();
                         } else {
-                            alert('database err. try again later.');
+                            if (response.code == 1) {
+                                alert('data error. incorrect or incomplete data.\n check form.');
+                            } else {
+                                alert('database err. try again later.');
+                            }
                         }
                     }
-                }
-            });
+                });
 
-        });
-    })(jQuery);
-</script>
+            });
+        })(jQuery);
+    </script>
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
             <?php while (have_posts()) : the_post(); ?>
@@ -51,14 +52,14 @@ get_header(); ?>
                     do_action('storefront_single_post_top'); ?>
                     <div class="entry-content">
                         <?php storefront_post_header(); ?>
-                        <table>
+                        <table class="single-book-table">
                             <tr>
-                                <td style="width: 300px;">
+                                <td class="left">
                                     <?php
                                     if (has_post_thumbnail()) {
                                         the_post_thumbnail($size);
                                     }
-                                    WP_Asmproger_Plugin::echoMeta();
+                                    do_action('show_meta_custom_hook');
                                     ?>
                                 </td>
                                 <td>
@@ -81,16 +82,19 @@ get_header(); ?>
                             </tr>
                         </table>
                         <div class="asmp-book-proposition-form">
-                            <?php $propositions = $asmpInstance->getPropositions(); ?>
-                            <?php if($propositions && count($propositions)): ?>
-                                <p>Propositions: </p>
-                                <ul class="asmp-book-propositions">
-                                    <?php foreach($propositions as $item): ?>
-                                    <li>
-                                        <?php echo $asmpInstance->getProposition($item); ?>
-                                    </li>
-                                    <?php endforeach; ?>
-                                </ul>
+                            <?php include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+                            if (is_plugin_active('asmproger-plugin/asmproger-plugin.php')): ?>
+                                <?php $propositions = $asmpInstance->getPropositions(); ?>
+                                <?php if ($propositions && count($propositions)): ?>
+                                    <p>Propositions: </p>
+                                    <ul class="asmp-book-propositions">
+                                        <?php foreach ($propositions as $item): ?>
+                                            <li>
+                                                <?php echo $asmpInstance->getProposition($item); ?>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
                             <?php endif; ?>
                             <h4 class="asmp-book-proposition-form-title">Your proposition?</h4>
                             <form method="post">
@@ -100,12 +104,13 @@ get_header(); ?>
                                 </div>
                                 <div>
                                     <label for="asmp_price">Price</label>
-                                    <input type="number" min="1" name="asmp-book-proposition-form[price]" id="asmp_price">
+                                    <input type="number" min="1" name="asmp-book-proposition-form[price]"
+                                           id="asmp_price">
                                 </div>
                                 <div>
                                     <label for="asmp_currency">Currency</label>
                                     <select name="asmp-book-proposition-form[currency]" id="asmp_currency">
-                                    <?php
+                                        <?php
                                         $cs = $asmpInstance->getAllowedCurrencies();
                                         foreach ($cs as $k => $v): ?>
                                             <option value="<?php echo $k; ?>"><?php echo $v; ?></option>

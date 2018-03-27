@@ -13,4 +13,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 
 ?>
-<p class="price" style="color:#f00; font-size: 13px; font-weight: bold;"><?php echo $product->get_price_html(); ?></p>
+<p class="price"><?php echo $product->get_price_html(); ?></p>
