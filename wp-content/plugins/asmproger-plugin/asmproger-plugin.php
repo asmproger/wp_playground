@@ -180,7 +180,7 @@ HTML;
         register_setting('asmp_options', 'asmp_settings_author_prefix');
         register_setting('asmp_options', 'asmp_settings_show_prefix');
 
-        //onse section for our options
+        // section for our options
         add_settings_section(
             'asmp_settings_section',
             'Books options',
@@ -188,49 +188,6 @@ HTML;
                 return 'some result';
             },
             'asmp_options'
-        );
-
-        // add check isbn field
-        add_settings_field(
-            'asmp_settings_show_isbn',
-            'Show ISBN?',
-            function () { // this callback generate html for our field
-                $checked = WP_Asmproger_Plugin::checkShowISBN() ? 'checked' : '';
-                $field = <<<FIELD
-    <input type="checkbox" name="asmp_settings_show_isbn" {$checked}>
-FIELD;
-                echo $field;
-            },
-            'asmp_options',
-            'asmp_settings_section'
-        );
-
-        add_settings_field(
-            'asmp_settings_author_prefix',
-            'Author prefix',
-            function () {
-                $value = WP_Asmproger_Plugin::getAdminPrefix();
-                $field = <<<FIELD
-    <input type="text" name="asmp_settings_author_prefix" value="{$value}">
-FIELD;
-                echo $field;
-            },
-            'asmp_options',
-            'asmp_settings_section'
-        );
-
-        add_settings_field(
-            'asmp_settings_show_prefix',
-            'Show author prefix?',
-            function () {
-                $checked = WP_Asmproger_Plugin::checkShowPrefix() ? 'checked' : '';
-                $field = <<<FIELD
-    <input type="checkbox" name="asmp_settings_show_prefix" {$checked}>
-FIELD;
-                echo $field;
-            },
-            'asmp_options',
-            'asmp_settings_section'
         );
     }
 
