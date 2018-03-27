@@ -80,3 +80,34 @@ li.type-product img {
     margin: 0;
     padding: 0;
 }
+.asmp-book-proposition-form div {
+    padding: 5px 0;
+}
+.asmp-book-proposition-form label {
+    width: 75px;
+    display: inline-block;
+}
+.asmp-book-proposition-form input {
+    height: 30px;
+    width: 200px;
+    border: 1px solid gray;
+    background-color: #fff;
+}
+.asmp-book-proposition-form select {
+    height: 30px;
+    width: 50px;
+    text-align: center;
+}
+.asmp-book-propositions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.asmp-book-propositions li .asmp-proposition-email {
+    font-weight: bold;
+    display: inline-block;
+    width: 200px;
+}
+.asmp-book-proposition-form-title {
+    font-size: 17px;
+}

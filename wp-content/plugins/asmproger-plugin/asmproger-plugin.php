@@ -43,6 +43,10 @@ class WP_Asmproger_Plugin
      */
     public function init()
     {
+        //here i try to handle post request from my custom form
+        add_action('wp_ajax_amsp_propose', [$this, 'addPropose']);
+        add_action('wp_ajax_nopriv_amsp_propose', [$this, 'addPropose']);
+
         // here we create our post type
         add_action('init', ['WP_Asmproger_Plugin', 'registerPostType']);
 
@@ -57,7 +61,6 @@ class WP_Asmproger_Plugin
 
         // just echo html code with isbn & author name through shortcode
         add_shortcode('asmp_book_meta', ['WP_Asmproger_Plugin', 'shortBook']);
-
     }
 
     /**
@@ -228,24 +231,185 @@ FIELD;
         );
     }
 
+    /**
+     * Options method. Check, if we should show book ISBN
+     * @return bool
+     */
     public static function checkShowISBN()
     {
         $show = get_option('asmp_settings_show_isbn', 'on');
         return $show == 'on';
     }
 
+    /**
+     * Options method. Check, if we should show book author prefix
+     * @return bool
+     */
     public static function checkShowPrefix()
     {
         $show = get_option('asmp_settings_show_prefix', 'on');
         return $show == 'on';
     }
 
+    /**
+     * Options method. Returns admin prefix for book author.
+     * @return string|void
+     */
     public static function getAdminPrefix()
     {
         $setting = get_option('asmp_settings_author_prefix');
         return isset($setting) ? esc_attr($setting) : '';
     }
+
+    /**
+     * Custom table creation on plugin activation.
+     */
+    public static function createTable()
+    {
+        global $wpdb;
+        $tableName = "{$wpdb->prefix}asmp_proposes";
+
+        if ($wpdb->get_var("SHOW TABLES LIKE '$tableName'") != $tableName) {
+            $sql = <<<SQL
+CREATE TABLE IF NOT EXISTS {$tableName} (
+id mediumint(9) NOT NULL AUTO_INCREMENT,
+email tinytext NOT NULL,
+currency tinytext NOT NULL,
+price mediumint(9) NOT NULL,
+UNIQUE KEY id (id)
+);
+SQL;
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+        }
+    }
+
+    /**
+     * Allowed currencies
+     * @var array
+     */
+    private $allowedCurrencies = ['pound' => '&pound;', 'usd' => '&dollar;', 'euro' => '&euro;'];
+
+    /**
+     * Returns allowed currencies
+     * @return array
+     */
+    public function getAllowedCurrencies()
+    {
+        return $this->allowedCurrencies;
+    }
+
+    /**
+     * simple params validation for 'add proposition' form
+     * @param $params
+     * @return mixed
+     */
+    private function prepareParams($params)
+    {
+        if (array_key_exists('email', $params)) {
+            $params['email'] = filter_var($params['email'], FILTER_VALIDATE_EMAIL);
+        } else {
+            $params['email'] = '';
+        }
+
+        if (array_key_exists('currency', $params)) {
+            if (!array_key_exists($params['currency'], $this->allowedCurrencies)) {
+                $params['currency'] = '';
+            }
+        } else {
+            $params['currency'] = 'usd';
+        }
+
+        if (array_key_exists('currency', $params)) {
+            $params['price'] = intval($params['price']);
+        } else {
+            $params['price'] = 0;
+        }
+        return $params;
+    }
+
+    /**
+     * Callback for ajax call
+     * Adding proposition to our custom table
+     */
+    public function addPropose()
+    {
+        // there is no post data?
+        if (!$_POST) {
+            return;
+        }
+
+        // params validation
+        $params = $this->prepareParams($_POST);
+
+        global $wpdb;
+        $prefix = $wpdb->prefix;
+
+        extract($params);
+
+        // if some problem with params
+        if (!$price || !$currency || !$email) {
+            echo json_encode([
+                'success' => false,
+                'code' => 1
+            ]);
+            die;
+        }
+
+        // simple insert. we have no unique fileds in our table (except of id), so any email could be used multiple times
+        $sql = "INSERT INTO {$prefix}asmp_proposes (`email`, `currency`, `price`) VALUES ('{$email}', '{$currency}', {$price});";
+
+        if ($result = $wpdb->query($sql)) {
+            echo json_encode([
+                'success' => true
+            ]);
+            die;
+        } else {
+            echo json_encode([
+                'success' => false,
+                'code' => 2
+            ]);
+            die;
+        }
+    }
+
+    /**
+     * return all propositions, ordered by price
+     * @return array|null|object
+     */
+    public function getPropositions()
+    {
+        global $wpdb;
+        $items = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}asmp_proposes ORDER BY price DESC");
+        return $items;
+    }
+
+    /**
+     * return formatted html string with proposition
+     * @param $item
+     * @return string
+     */
+    public function getProposition($item)
+    {
+        $result = "<span class='asmp-proposition-email'>{$item->email}:</span> <span class='asmp-proposition-price'> " . $item->price . $this->getCurrencyLabel($item->currency) . '</span>';
+        return $result;
+    }
+
+    /**
+     * returns currency html code by currency name
+     * @param $currency
+     * @return mixed|string
+     */
+    public function getCurrencyLabel($currency)
+    {
+        if (array_key_exists($currency, $this->allowedCurrencies)) {
+            return $this->allowedCurrencies[$currency];
+        }
+        return '';
+    }
 }
 
 $asmpInstance = WP_Asmproger_Plugin::getInstance();
 $asmpInstance->init();
+
+register_activation_hook(__FILE__, ['WP_Asmproger_Plugin', 'createTable']);
