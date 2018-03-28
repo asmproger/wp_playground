@@ -12,7 +12,7 @@ Author URI: http://wasm.in
 if (!defined('WPINC')) {
     die;
 }
-
+require_once 'view-plugin.php';
 /**
  * Class WP_Asmproger_Plugin
  * Main and only class for test Asmproger plugin
@@ -24,16 +24,17 @@ class WP_Asmproger_Plugin
      * @var null
      */
     protected static $_instance = null;
+    private $viewHelper;
 
-    private function __constructor()
+    private function __construct()
     {
-
+        $this->viewHelper = ViewHelper::getInstance();
     }
 
     public static function getInstance()
     {
         if (is_null(self::$_instance)) {
-            self::$_instance = new self();
+            self::$_instance = new WP_Asmproger_Plugin();
         }
         return self::$_instance;
     }
@@ -57,40 +58,31 @@ class WP_Asmproger_Plugin
         add_action('admin_init', ['WP_Asmproger_Plugin', 'settingsPage']);
 
         // just echo html code with isbn & author name
-        add_action('storefront_single_post', ['WP_Asmproger_Plugin', 'echoMeta'], 25);
+        add_action('storefront_single_post', [$this, 'echoMeta'], 25);
 
         // just echo html code with isbn & author name through shortcode
         add_shortcode('asmp_book_meta', ['WP_Asmproger_Plugin', 'shortBook']);
 
         // custom hook for displaying book meta info
-        add_action('show_meta_custom_hook', array('WP_Asmproger_Plugin', 'echoMeta'));
+        add_action('show_meta_custom_hook', array($this, 'echoMeta'));
     }
 
     /**
      * html code with isbn & author name
      */
-    public static function echoMeta()
+    public function echoMeta()
     {
         // lets check settings!
-        $isbn = self::checkShowISBN() ? get_post_meta(get_the_ID(), 'ISBN', 1) : 'hidden';
+        $isbn = WP_Asmproger_Plugin::checkShowISBN() ? get_post_meta(get_the_ID(), 'ISBN', 1) : 'hidden';
         $author = get_post_meta(get_the_ID(), 'Writer', 1);
 
-        if (self::checkShowPrefix()) {
-            $author = self::getAdminPrefix() . $author;
+        if (WP_Asmproger_Plugin::checkShowPrefix()) {
+            $author = WP_Asmproger_Plugin::getAdminPrefix() . $author;
         }
 
-        $meta = <<<META
-<table class="book-meta-table">
-<tr>
-<td class="book-meta-title">ISBN</td>
-<td>{$isbn}</td>
-</tr>
-<tr>
-<td class="book-meta-title">Author</td>
-<td>{$author}</td>
-</tr>
-</table>
-META;
+        $meta = $this->viewHelper->getView([
+            'isbn' => $isbn, 'author' => $author
+        ], 'meta');
 
         echo $meta;
     }
@@ -99,7 +91,7 @@ META;
      * shortcode for html code with isbn & author name
      * @return string
      */
-    public static function shortBook()
+    public function shortBook()
     {
         // lets check, if there is book id in args?
         $args = func_get_arg(0);
@@ -112,26 +104,19 @@ META;
                  */
                 $post = get_post($id);
                 if ($post) {
-                    $isbn = self::checkShowISBN() ? get_post_meta($id, 'ISBN', 1) : 'hidden';
+                    $isbn = WP_Asmproger_Plugin::checkShowISBN() ? get_post_meta($id, 'ISBN', 1) : 'hidden';
                     $auth = get_post_meta($id, 'Writer', 1);
-                    if (self::checkShowPrefix()) {
-                        $auth = self::getAdminPrefix() . $auth;
+                    if (WP_Asmproger_Plugin::checkShowPrefix()) {
+                        $auth = WP_Asmproger_Plugin::getAdminPrefix() . $auth;
                     }
                     $title = get_the_title($id);
-                    $html = <<<HTML
-<p>
-{$title}
-<br/>
-<small>{$auth}</small>
-<br/>
-<small>{$isbn}</small>
-</p>
-HTML;
+                    $html = $this->viewHelper->getView([
+                        'title' => $title, 'isbn' => $isbn, 'auth' => $auth
+                    ], 'meta-shortcode');
                     return $html;
                 }
             }
         }
-        $argsStr = implode(',', $args);
         return '';
     }
 
