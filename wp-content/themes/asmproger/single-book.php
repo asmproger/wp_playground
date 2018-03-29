@@ -139,7 +139,7 @@ get_header(); ?>
         </main><!-- #main -->
     </div><!-- #primary -->
 <?php
-dynamic_sidebar('asmp_custom_sidebar');
-do_action('storefront_sidebar');
-get_footer();
+    dynamic_sidebar('asmp_custom_sidebar');
+    do_action('storefront_sidebar');
+    get_footer();
 ?>

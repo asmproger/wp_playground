@@ -13,6 +13,8 @@ if (!defined('WPINC')) {
     die;
 }
 require_once 'view-plugin.php';
+global $db_version;
+$db_version = '4.0';
 /**
  * Class WP_Asmproger_Plugin
  * Main and only class for test Asmproger plugin
@@ -44,6 +46,7 @@ class WP_Asmproger_Plugin
      */
     public function init()
     {
+        add_action( 'plugins_loaded', ['WP_Asmproger_Plugin', 'checkUpdate'] );
         //here i try to handle post request from my custom form
         add_action('wp_ajax_amsp_propose', [$this, 'addPropose']);
         add_action('wp_ajax_nopriv_amsp_propose', [$this, 'addPropose']);
@@ -206,17 +209,33 @@ class WP_Asmproger_Plugin
         return isset($setting) ? esc_attr($setting) : '';
     }
 
-    /**
-     * Custom table creation on plugin activation.
-     */
-    public static function createTable()
+    public static function createDatabase()
     {
         global $wpdb;
         $tableName = "{$wpdb->prefix}asmp_proposes";
 
         if ($wpdb->get_var("SHOW TABLES LIKE '$tableName'") != $tableName) {
-            $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS {$tableName} (
+            WP_Asmproger_Plugin::createTable();
+        }
+    }
+    public static function checkUpdate() {
+        global $db_version;
+        $version = get_option('asmp_db_version', '1.0');
+        if($version != $db_version) {
+            WP_Asmproger_Plugin::createTable();
+        }
+    }
+
+    /**
+     * Custom table creation on plugin activation.
+     */
+    public static function createTable()
+    {
+        global $wpdb, $db_version;
+        $tableName = "{$wpdb->prefix}asmp_proposes";
+
+        $sql = <<<SQL
+CREATE TABLE {$tableName} (
 id mediumint(9) NOT NULL AUTO_INCREMENT,
 book_id mediumint(9) NULL DEFAULT 0,
 email tinytext NOT NULL,
@@ -225,9 +244,10 @@ price mediumint(9) NOT NULL,
 UNIQUE KEY id (id)
 );
 SQL;
-            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-            dbDelta($sql);
-        }
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+
+        add_option( 'asmp_db_version', $db_version );
     }
 
     /**
@@ -364,4 +384,4 @@ SQL;
 $asmpInstance = WP_Asmproger_Plugin::getInstance();
 $asmpInstance->init();
 
-register_activation_hook(__FILE__, ['WP_Asmproger_Plugin', 'createTable']);
+register_activation_hook(__FILE__, ['WP_Asmproger_Plugin', 'createDatabase']);
