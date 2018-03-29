@@ -218,6 +218,7 @@ class WP_Asmproger_Plugin
             $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS {$tableName} (
 id mediumint(9) NOT NULL AUTO_INCREMENT,
+book_id mediumint(9) NULL DEFAULT 0,
 email tinytext NOT NULL,
 currency tinytext NOT NULL,
 price mediumint(9) NOT NULL,
@@ -270,6 +271,12 @@ SQL;
         } else {
             $params['price'] = 0;
         }
+
+        if (array_key_exists('book_id', $params)) {
+            $params['book_id'] = intval($params['book_id']);
+        } else {
+            $params['book_id'] = 0;
+        }
         return $params;
     }
 
@@ -302,7 +309,7 @@ SQL;
         }
 
         // simple insert. we have no unique fileds in our table (except of id), so any email could be used multiple times
-        $sql = "INSERT INTO {$prefix}asmp_proposes (`email`, `currency`, `price`) VALUES ('{$email}', '{$currency}', {$price});";
+        $sql = "INSERT INTO {$prefix}asmp_proposes (`book_id`, `email`, `currency`, `price`) VALUES ({$book_id}, '{$email}', '{$currency}', {$price});";
 
         if ($result = $wpdb->query($sql)) {
             echo json_encode([

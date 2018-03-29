@@ -17,6 +17,7 @@ get_header(); ?>
             $(document).on('click', "#asmp-submit-propose", function (e) {
                 var data = {
                     action: 'amsp_propose',
+                    book_id: $('#book_id').val(),
                     email: $('#asmp_user_email').val(),
                     price: $('#asmp_price').val(),
                     currency: $('#asmp_currency').val()
@@ -118,6 +119,7 @@ get_header(); ?>
                                     </select>
                                 </div>
                                 <div>
+                                    <input type="hidden" id="book_id" name="book_id" value="<?php echo get_the_ID(); ?>">
                                     <button type="button" id="asmp-submit-propose">Go!</button>
                                 </div>
                             </form>
@@ -137,6 +139,7 @@ get_header(); ?>
         </main><!-- #main -->
     </div><!-- #primary -->
 <?php
+dynamic_sidebar('asmp_custom_sidebar');
 do_action('storefront_sidebar');
 get_footer();
 ?>

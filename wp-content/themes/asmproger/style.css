@@ -138,3 +138,11 @@ li.type-product img {
 table.single-book-table td.left {
     width: 300px;
 }
+.asmp-propositions-wrapper p {
+    margin: 0;
+    display: inline-block;
+}
+.asmp-propositions-wrapper p .asmp-propositions-title {
+    min-width: 90px;
+    display: inline-block;
+}

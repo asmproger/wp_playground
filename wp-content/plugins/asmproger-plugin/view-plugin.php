@@ -1,13 +1,4 @@
 <?php
-/*
-Plugin Name: Asmproger Plugin
-Plugin URI: https://wordpress2.local
-Description: My first plugin for WP.
-Version: 1.0
-Author: asmproger
-Author URI: http://wasm.in
-*/
-
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
     die;

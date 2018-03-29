@@ -12,3 +12,13 @@
 
 2018-03-28T12:09:42+00:00 CRITICAL Call to a member function getView() on null
 
+2018-03-29T08:43:32+00:00 CRITICAL Class 'Asmp_Propositions' not found
+
+2018-03-29T09:36:24+00:00 CRITICAL Using $this when not in object context
+
+2018-03-29T09:39:02+00:00 CRITICAL Class 'ViewHelper' not found
+
+2018-03-29T09:39:05+00:00 CRITICAL Class 'ViewHelper' not found
+
+2018-03-29T09:39:07+00:00 CRITICAL Class 'ViewHelper' not found
+
